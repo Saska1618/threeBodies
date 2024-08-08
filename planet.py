@@ -1,7 +1,7 @@
 G = 10
 
 class Planet:
-    def __init__(self, x = 50, y = 50, velocity_x = 0, velocity_y = 0, mass = 100, color = (0, 0, 255), max_width = 800, max_height = 600):
+    def __init__(self, x = 50, y = 50, velocity_x = 0, velocity_y = 0, mass = 100, color = (0, 0, 255), max_width = 800, max_height = 600, trail = []):
         self.x = x
         self.y = y
         self.velocity_x = velocity_x
@@ -11,6 +11,8 @@ class Planet:
 
         self.max_width = max_width
         self.max_height = max_height
+
+        self.trail = trail
 
     def update_position(self, force_x, force_y, dt = 1):
 

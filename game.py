@@ -11,7 +11,7 @@ win = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 run = True
 
 planets = []
-trail_length = 10
+trail_length = 200
 
 def get_planets_from_csv():
     df = pd.read_csv('planet_data.csv')
@@ -21,6 +21,14 @@ def get_planets_from_csv():
     for i in range(no_planets):
         planets.append(Planet(df['x'][i], df['y'][i], df['velocity_x'][i], df['velocity_y'][i], df['mass'][i], (df['colorR'][i], df['colorG'][i], df['colorB'][i]), df['max_width'][i], df['max_height'][i]))
 
+def draw_trails():
+        for i in range(len(planets)):
+            trail_color = (planets[i].color[0] // 2, planets[i].color[1] // 2, planets[i].color[2] // 2)
+            if len(planets[i].trail) == trail_length:
+                for j in range(len(planets[i].trail)-1):
+                    #prev_x = planets[i].x - planets[i].trail[j - 1][0]
+                    #prev_y = planets[i].y - planets[i].trail[j - 1][1]
+                    pygame.draw.line(win, trail_color, (planets[i].trail[j][0], planets[i].trail[j][1]), (planets[i].trail[j+1][0], planets[i].trail[j+1][1]), 3)
 
 
 
@@ -41,6 +49,11 @@ def update_planets():
                 total_force_y += force_y
 
         planets[i].update_position(total_force_x, total_force_y)
+        planets[i].trail.insert(0, (planets[i].x, planets[i].y))
+
+        if len(planets[i].trail) >= trail_length:
+            planets[i].trail = planets[i].trail[:trail_length]
+
 
 get_planets_from_csv()
 
@@ -56,6 +69,7 @@ while run:
 
     update_planets()
 
+    draw_trails()
     draw_planets()
     pygame.display.update()
     
