@@ -1,0 +1,4 @@
+x,y,velocity,mass,colorR,colorG,colorB,max_width,max_height
+50,50,1,50,0,0,255,800,600
+500,500,1,50,0,255,0,800,600
+350,150,1,50,255,0,0,800,600

@@ -1,5 +1,6 @@
 import pygame
 from planet import Planet
+import pandas as pd
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -8,7 +9,24 @@ win = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 run = True
 
-pl1 = Planet(50, 50, 1, 50, (0, 0, 255))
+planets = []
+
+def get_planets_from_csv():
+    df = pd.read_csv('planet_data.csv')
+
+    no_planets = df.shape[0]
+
+    for i in range(no_planets):
+        planets.append(Planet(df['x'][i], df['y'][i], df['velocity'][i], df['mass'][i], (df['colorR'][i], df['colorG'][i], df['colorB'][i]), df['max_width'][i], df['max_height'][i]))
+
+
+def draw_planets():
+
+    for planet in planets:
+        pygame.draw.circle(win, planet.color, (planet.x, planet.y), planet.mass)
+
+get_planets_from_csv()
+print(planets[0].color)
 
 while run:
 
@@ -18,20 +36,9 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LEFT]:
-        pl1.move(-1, 0)
-    elif keys[pygame.K_RIGHT]:
-        pl1.move(1, 0)
-    elif keys[pygame.K_UP]:
-        pl1.move(0, -1)
-    elif keys[pygame.K_DOWN]:
-        pl1.move(0, 1)
-
     win.fill((0, 0, 0))
 
-    pygame.draw.circle(win, pl1.color, (pl1.x, pl1.y), pl1.mass)
+    draw_planets()
     pygame.display.update()
     
 
