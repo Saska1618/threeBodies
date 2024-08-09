@@ -1,9 +1,9 @@
 # threeBodies
 Creating a simulation of the three-body problem
 
-In this repo, i will create 3 bodies, each having a mass and simulate how they will pull each other with their gravitational force
+In this repo, i created 3 bodies, each having a mass and simulate how they will pull each other with their gravitational force
 
-I am planning on using Python with pygame.
+I used the pygame library to make things easier.
 
 This is just for fun, no big plans with it:)
 
